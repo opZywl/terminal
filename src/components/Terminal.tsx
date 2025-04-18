@@ -1,13 +1,11 @@
-import type { FC } from 'react'
+import React, { useEffect } from 'react'
+import { initTerminal } from '../services/Core'
 import '../styles/App.css'
 
-const Terminal: FC = () => {
+export default function Terminal() {
+    useEffect(() => {
+        initTerminal()
+    }, [])
 
-    return (
-        <div className="terminal">
-            {}
-        </div>
-    )
+    return <div id="terminal" className="terminal" />
 }
-
-export default Terminal
