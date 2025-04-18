@@ -6,7 +6,6 @@ const Terminal: FC = () => {
     return (
         <div className="terminal">
             {}
-            <p>Meu terminal em React+TS</p>
         </div>
     )
 }

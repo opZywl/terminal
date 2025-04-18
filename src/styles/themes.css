@@ -1,0 +1,69 @@
+/* temas escuros / dark themes */
+.dark-forest {
+    --color-background: hsl(220, 13%, 18%);
+    --color-text: hsl(218, 13%, 88%);
+    --color-terminal-text: hsl(27, 100%, 42%);
+    --color-caret-Keyword: hsl(39, 100%, 71%);
+}
+.dark-day {
+    --color-background: hsl(20, 10%, 12%);
+    --color-text: hsl(35, 40%, 54%);
+    --color-terminal-text: hsl(150, 31%, 46%);
+    --color-caret-Keyword: hsl(150, 36%, 54%);
+}
+.dark-ocean {
+    --color-background: hsl(194, 100%, 4%);
+    --color-text: hsl(218, 13%, 88%);
+    --color-terminal-text: hsl(143, 100%, 33%);
+    --color-caret-Keyword: hsl(79, 80%, 51%);
+}
+.dark-space {
+    --color-background: hsl(252, 7%, 12%);
+    --color-text: hsl(218, 13%, 88%);
+    --color-terminal-text: hsl(199, 100%, 59%);
+    --color-caret-Keyword: hsl(185, 100%, 64%);
+}
+.dark-night {
+    --color-background: hsl(240, 14%, 9%);
+    --color-text: hsl(218, 13%, 88%);
+    --color-terminal-text: hsl(45, 100%, 50%);
+    --color-caret-Keyword: hsl(234, 100%, 72%);
+}
+.dark-cave {
+    --color-background: hsl(0, 0%, 0%);
+    --color-text: hsl(218, 13%, 88%);
+    --color-terminal-text: hsl(82, 100%, 37%);
+    --color-caret-Keyword: hsl(146, 60%, 56%);
+}
+.dark-sea {
+    --color-background: hsl(0, 0%, 10%);
+    --color-text: hsl(0, 0%, 90%);
+    --color-terminal-text: hsl(120, 100%, 60%);
+    --color-caret-Keyword: hsl(210, 100%, 60%);
+}
+
+/* temas claros / light themes */
+.light-vanilla {
+    --color-background: hsl(190, 18%, 87%);
+    --color-text: hsl(198, 13%, 15%);
+    --color-terminal-text: hsl(357, 77%, 56%);
+    --color-caret-Keyword: hsl(357, 100%, 71%);
+}
+.light-haze {
+    --color-background: hsl(59, 99%, 94%);
+    --color-text: hsl(0, 0%, 10%);
+    --color-terminal-text: hsl(0, 0%, 70%);
+    --color-caret-Keyword: hsl(120, 100%, 60%);
+}
+.light-day {
+    --color-background: hsl(30, 60%, 95%);
+    --color-text: hsl(198, 13%, 15%);
+    --color-terminal-text: hsl(357, 77%, 56%);
+    --color-caret-Keyword: hsl(357, 100%, 71%);
+}
+.light-sky {
+    --color-background: hsl(60, 70%, 95%);
+    --color-text: hsl(0, 0%, 10%);
+    --color-terminal-text: hsl(200, 50%, 50%);
+    --color-caret-Keyword: hsl(240, 100%, 70%);
+}

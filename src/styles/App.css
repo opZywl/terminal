@@ -1,10 +1,232 @@
+@import "./themes.css";
+
+:root {
+  --color-error: hsl(355, 75%, 45%);
+  --font-size: clamp(12px, 0.8vw, 20px);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,
+input {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'FiraCode Nerd Font', sans-serif, 'Courier New', Courier, monospace;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  scroll-behavior: smooth;
+}
+
+.version {
+  font-size: clamp(8px, 0.9vw, 20px);
+  font-weight: bolder;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: min(2rem, 2vw);
+}
+.art,
+.name {
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre;
+  font-size: clamp(4.3px, 0.6vw, 14px);
+  font-weight: 800;
+}
+
+.help {
+  white-space: pre-line;
+  font-size: var(--font-size);
+  font-weight: normal;
+  text-align: left;
+  margin-top: 1rem;
+}
+.keyword {
+  color: var(--color-caret-Keyword);
+  font-weight: normal;
+  text-shadow: 0 0 0.3rem var(--color-caret-Keyword);
+}
+.terminal {
+  display: flex;
+  flex-direction: column;
+  gap: min(2rem, 2vh);
+}
+.line1 {
+  display: flex;
+  justify-content: space-between;
+}
+.line2 {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+}
+.line1 span,
+.line2 span,
+.command_input {
+  color: var(--color-terminal-text);
+  font-size: var(--font-size);
+}
+.command_input {
+  border: none;
+  outline: none;
+  font-weight: lighter;
+  font-size: var(--font-size);
+  color: var(--color-text);
+  caret-color: var(--color-caret-Keyword);
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+.output,
+.error {
+  padding: 1rem 2rem;
+  font-size: var(--font-size);
+  overflow-x: auto;
+}
+.error {
+  color: var(--color-error);
+  font-weight: bold;
+}
+.output table {
+  min-width: 100%;
+  width: max-content;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-family: 'FiraCode Nerd Font', monospace;
+}
+.output th,
+.output td {
+  padding: 0.5em;
+  border: 1px solid var(--color-terminal-text);
+  text-align: left;
+}
+.output th {
+  background-color: var(--color-caret-Keyword);
+  color: var(--color-background);
+}
+.output tbody tr:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.output tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.output table th,
+.output table td {
+  word-break: break-word;
+}
+.output table a {
+  color: var(--color-caret-Keyword);
+  text-decoration: none;
+}
+.output table a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .output table th:nth-child(4),
+  .output table td:nth-child(4),
+  .output table th:nth-child(5),
+  .output table td:nth-child(5) {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .output table th:nth-child(3),
+  .output table td:nth-child(3) {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .output table th,
+  .output table td {
+    padding: 0.3em;
+    font-size: 0.8rem;
+  }
+}
+
+.resume {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--color-text);
+  border-radius: 0.6rem;
+  font-family: monospace;
+  margin-top: 1rem;
+}
+.resume > *:not(:last-child) {
+  padding-bottom: 1rem;
+}
+hr {
+  width: 100%;
+  border: 0.1vw solid var(--color-text);
+  border-radius: 1rem;
+}
+.resume a {
+  color: var(--color-text);
+  text-decoration: underline;
+  font-weight: 900;
+  padding: 0 0.4rem;
+}
+.resume a:hover,
+.resume a:focus {
+  background-color: var(--color-terminal-text);
+  color: var(--color-background);
+}
+.resume strong {
+  font-weight: 900;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.header p {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.4rem;
+  white-space: pre;
+}
+.education > *,
+.professional-experience > *,
+.projects > *,
+.skills > *,
+.achievements-and-certifications > * {
+  padding-bottom: 0.5rem;
+}
+.education-item,
+.professional-experience-item {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.education-item > *:nth-child(2n + 2),
+.professional-experience-item > *:nth-child(2n + 2) {
+  text-align: right;
+}
+.professional-experience-item > ul,
+.projects-item > ul,
+.skills > ul,
+.achievements-and-certifications > ul {
+  padding-left: 2rem;
+  padding-top: 0.25rem;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
-
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -17,7 +239,6 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
-
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -26,17 +247,14 @@
     transform: rotate(360deg);
   }
 }
-
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
 }
-
 .card {
   padding: 2em;
 }
-
 .read-the-docs {
   color: #888;
 }

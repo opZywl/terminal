@@ -1,4 +1,3 @@
-// src/App.tsx
 import TerminalLayout from './components/TerminalLayout'
 import Terminal from './components/Terminal'
 
