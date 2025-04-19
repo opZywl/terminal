@@ -3,9 +3,9 @@ export class UniversalFunction {
      * Cria (ou atualiza) um elemento dentro do último bloco `.command`.
      *
      * @param tag    Tag do elemento (ex.: 'div')
-     * @param classes  Classe(s) – string separada por espaços ou array
+     * @param classes  Classe(s)  separada por espaços ou array
      * @param html     Conteúdo HTML
-     * @param cmdEl    Bloco `.command` alvo (opcional)
+     * @param cmdEl    Bloco` alvo (opcional)
      */
     updateElement(
         tag: string,

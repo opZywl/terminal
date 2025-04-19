@@ -1,10 +1,11 @@
 import { UniversalFunction } from "./UniversalFunction";
-import { RAData, RAEntry } from "./RAData";
+import { getRAData, RAEntry } from "./RAData";
 
 export class RA {
-    private static awaiting = false;
-    private static fails = 0;
-    static isAwaiting(): boolean { return RA.awaiting; }
+    private static waitingPass = false;
+    private static waitingCode = false;
+    private static fails       = 0;
+    static isAwaiting(): boolean { return RA.waitingPass || RA.waitingCode; }
 
     private readonly PASS = "0000";
     private readonly redirects: string[][] = [
@@ -17,48 +18,94 @@ export class RA {
         ]
     ];
 
-    private uf = new UniversalFunction();
-    private cmd: HTMLElement;
+    private uf  = new UniversalFunction();
+    private readonly cmd: HTMLElement;
 
-    constructor(arg: string, commandElement: HTMLElement) {
-        this.cmd = commandElement;
+    constructor(arg: string, cmd: HTMLElement) {
+        this.cmd = cmd;
         this.handle(arg.trim());
     }
 
     private handle(input: string): void {
-        if (!RA.awaiting) {
-            RA.awaiting = true;
-            this.uf.updateElement("div", "output", "Digite a senha para acessar o RA:", this.cmd);
+        if (!RA.waitingPass && !RA.waitingCode) {
+            RA.waitingPass = true;
+            this.uf.updateElement("div", "output",
+                "Digite a senha para acessar o RA:", this.cmd);
             return;
         }
 
-        RA.awaiting = false;
-        if (input === this.PASS) {
-            RA.fails = 0;
-            this.uf.updateElement("div", "output", this.buildTable(), this.cmd);
+        if (RA.waitingPass) {
+            RA.waitingPass = false;
+
+            if (input === this.PASS) {
+                RA.fails = 0;
+                RA.waitingCode = true;
+                this.uf.updateElement("div", "output",
+                    "Senha aceita. Insira o código:", this.cmd);
+                return;
+            }
+
+            RA.fails++;
+            this.uf.updateElement("div", "error",
+                "Senha incorreta, você não tem acesso.", this.cmd);
+
+            const idx = Math.min(RA.fails - 1, this.redirects.length - 1);
+            setTimeout(() => {
+                this.redirects[idx].forEach((url, i) =>
+                    window.open(url, `_blank_${Date.now()}_${i}`));
+            }, 3000);
             return;
         }
 
-        RA.fails++;
-        this.uf.updateElement("div", "error", "Senha incorreta, você não tem acesso.", this.cmd);
+        if (RA.waitingCode) {
+            RA.waitingCode = false;
 
-        const idx = Math.min(RA.fails - 1, this.redirects.length - 1);
-        setTimeout(() => {
-            this.redirects[idx].forEach((url, i) => {
-                window.open(url, `_blank_${Date.now()}_${i}`);
+            if (!input.startsWith("1337")) {
+                this.uf.updateElement("div", "error",
+                    "Código inválido.", this.cmd);
+                RA.waitingCode = true;
+                return;
+            }
+
+            const b64 = input.slice(4);
+            let url: string;
+            try {
+                url = atob(b64);
+                if (!/^https?:\/\//i.test(url)) throw new Error();
+            } catch {
+                this.uf.updateElement("div", "error",
+                    "Código inválido.", this.cmd);
+                RA.waitingCode = true;
+                return;
+            }
+
+            this.uf.updateElement("div", "output",
+                "Carregando dados…", this.cmd);
+
+            getRAData(url).then((data) => {
+                this.uf.updateElement("div", "output",
+                    this.buildTable(data), this.cmd);
+            }).catch(() => {
+                this.uf.updateElement("div", "error",
+                    "Erro ao obter dados.", this.cmd);
+                RA.waitingCode = true;
             });
-        }, 3000);
+        }
     }
 
-    private buildTable(): string {
-        const rows = RAData.map((e: RAEntry) => `
-      <tr>
-        <td>${e.nome}</td><td>${e.RA}</td><td>${e.PASS}</td><td>${e.token}</td><td>${e.note ?? ""}</td>
-      </tr>`).join("");
-
+    private buildTable(data: RAEntry[]): string {
         return `<table>
-      <thead><tr><th>Nome</th><th>RA</th><th>PASS</th><th>Token</th><th>Note</th></tr></thead>
-      <tbody>${rows}</tbody>
+      <thead>
+        <tr><th>Nome</th><th>RA</th><th>PASS</th>
+            <th>Token</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        ${data.map((e) => `
+          <tr>
+            <td>${e.nome}</td><td>${e.RA}</td><td>${e.PASS}</td>
+            <td>${e.token}</td><td>${e.note ?? ""}</td>
+          </tr>`).join("")}
+      </tbody>
     </table>`;
     }
 }

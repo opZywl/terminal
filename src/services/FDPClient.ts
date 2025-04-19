@@ -1,7 +1,7 @@
 import { UniversalFunction } from "./UniversalFunction";
 
 /**
- * fdpclient – lista versões do FDPClient e contagem de downloads a partir dos releases GitHub.
+ * fdpclient – lista versões do FDPClient e contagem de ‘downloads’ a partir dos releases GitHub.
  *
  * usage
  *   fdpclient → busca e mostra todas as versões disponíveis, além de links rápidos
