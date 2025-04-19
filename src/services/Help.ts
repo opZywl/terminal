@@ -55,7 +55,7 @@ const commands: Command[] = [
     { name: 'ra', description: 'SI Query database leak from UNASP (2022 & 2025).' },
     {
         name: 'paste',
-        description: 'Sends text or files (up to 10MB) to a Discord webhook; use `paste <text>` to send text (automatically split into chunks) or `paste --file` to select and send files.'
+        description: 'Sends text or files (up to 10MB) to a Discord webhook.'
     },
     { name: 'fdpclient', description: 'List versions and download counts from GitHub releases.' }
 ];
