@@ -2,15 +2,29 @@ import { UniversalFunction } from './UniversalFunction';
 
 declare global {
     interface Window {
-        html2pdf: any;
+        html2pdf: () => {
+            from: (element: HTMLElement) => {
+                set: (options: {
+                    filename: string;
+                    margin: number;
+                    jsPDF: {
+                        unit: string;
+                        format: string;
+                        orientation: string;
+                    };
+                }) => {
+                    save: () => Promise<void>;
+                };
+            };
+        };
     }
 }
 
 export class Resume {
     private options: string;
     private uf: UniversalFunction;
-    private commandElement: HTMLElement;
-    private commands: Record<string, (value?: string) => void>;
+    private readonly commandElement: HTMLElement;
+    private readonly commands: Record<string, (value?: string) => void>;
 
     constructor(options: string = '', commandElement: HTMLElement) {
         this.options = options.trim();
@@ -66,8 +80,12 @@ export class Resume {
         );
         try {
             await this.generateResume(format, fileName);
-        } catch (err: any) {
-            this.displayError(err.message);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                this.displayError(err.message);
+            } else {
+                this.displayError('Um erro desconhecido ocorreu');
+            }
         }
     }
 

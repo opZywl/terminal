@@ -58,12 +58,10 @@ const commands: Command[] = [
     },
     { name: 'decode64', description: 'decodificar' },
     { name: 'encode64', description: 'encode' },
-    /*
     {
         name: 'ra',
-        description: 'RA Database leak unasp. 2021 & 2025 by opzywl.'
+        description: 'RA Database leak unasp. 2022 & 2025 by opzywl.'
     },
-    */
     { name: 'exit', description: 'Sai do terminal.' }
 ];
 
