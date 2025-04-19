@@ -39,7 +39,7 @@ export default function TerminalLayout({ children }: TerminalLayoutProps) {
 
     return (
         <main>
-            <p className="version">Terminal – sem regras v1.0.0 by Lucas Lima</p>
+            <p className="version">Terminal Interativo v1.0.0 – by Lucas Lima</p>
 
             <div className="intro">
                 <div className="art"><pre>{art}</pre></div>
@@ -48,8 +48,8 @@ export default function TerminalLayout({ children }: TerminalLayoutProps) {
 
             <div className="help">
                 <p>
-                    Bem vindo ao meu ssh interativo!!<br />
-                    Para uma lista de comandos, escreva <span className="keyword">help</span>.
+                    Seja bem-vindo ao meu terminal interativo!!<br />
+                    Digite <span className="keyword">help</span> para ver a lista completa de comandos.
                 </p>
             </div>
 

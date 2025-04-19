@@ -173,7 +173,6 @@ export class Decode64 {
             return;
         }
 
-
         try {
             const binaryString = atob(cleanedB64);
             const bytes = new Uint8Array(binaryString.length);
@@ -244,7 +243,6 @@ export class Decode64 {
             .replace(/"/g, "")
             .replace(/'/g, "'")
     }
-
 
     private showHelp(): void {
         const msg = `<strong>decode64</strong> – Decodifica e codifica dados em Base64.<br><br>

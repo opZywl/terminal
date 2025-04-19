@@ -4,7 +4,6 @@ import { About } from './About'
 import { Help } from './Help'
 import { History as HistoryDOM } from './History'
 import { Resume } from './Resume'
-import { Connect } from './Connect'
 import { Contact } from './Contact'
 import { RA } from './RA'
 import { Ping } from './Ping'
@@ -52,9 +51,6 @@ export class Controller {
                 break
            case 'about':
                 new About().updateDOM()
-                break
-            case 'connect':
-                new Connect().updateDOM()
                 break
             case 'contact':
                 new Contact().updateDOM()

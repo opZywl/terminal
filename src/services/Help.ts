@@ -12,57 +12,48 @@ interface Command {
 }
 
 const commands: Command[] = [
-    { name: 'help', description: 'Lista de comandos.' },
-    { name: 'clear', description: 'Limpa o terminal.' },
-    { name: 'history', description: 'Histórico de comandos.' },
-    { name: 'clock', description: 'Verificar horário em outros países.' },
-    { name: 'pages', description: 'Acessar Paginas Salvas' },
-    { name: 'fdpclient', description: 'lista versões e contagem de downloads dos releases GitHub.' },
-    {
-        name: 'theme',
-        description: 'Muda o tema do terminal.',
-        options: [
-            {
-                option: '--name [theme-name]',
-                description: 'Change the theme to the given theme name.'
-            },
-            { option: '--list', description: 'List all the themes.' }
-        ]
-    },
-    { name: 'about', description: 'Sobre mim.' },
+    { name: 'help', description: 'Show the complete list of available commands.' },
+    { name: 'clear', description: 'Clear the terminal screen.' },
+    { name: 'history', description: 'Display previously executed commands.' },
+    { name: 'exit', description: 'Exit and close the terminal session.' },
+
+    { name: 'about', description: 'Display a short description about me.' },
     {
         name: 'resume',
-        description: 'Mostrar CV.',
+        description: 'View my resume with experience and skills.',
         options: [{ option: '--download', description: 'Download the resume. 📥' }]
     },
     {
-        name: 'connect',
-        description: 'Conecte-se comigo.',
-        options: [
-            { option: '--goto [social-network]', description: 'Go to the given social network.' },
-            { option: '--list', description: 'List all the social networks.' }
-        ]
-    },
-    {
         name: 'contact',
-        description: 'Mostrar informações de contato.',
+        description: 'View available contact methods.',
         options: [
-            { option: '--goto [contact-method]', description: 'Go to the given contact method.' },
-            { option: '--list', description: 'List all the contact methods.' }
+            { option: '--list', description: 'List all contact methods.' },
+            { option: '--goto [contact-method]', description: 'Open the specified contact method.' }
         ]
     },
+
+    {
+        name: 'theme',
+        description: 'Customize the appearance of the terminal.',
+        options: [
+            { option: '--list', description: 'Show all available themes.' },
+            { option: '--name [theme-name]', description: 'Apply the specified theme.' }
+        ]
+    },
+
+    { name: 'pages', description: 'Access previously saved pages and links.' },
+
+    { name: 'clock', description: 'Check the current time in different countries and time zones.' },
     {
         name: 'ping',
-        description: 'Ping a domain.',
-        options: [{ option: 'domain', description: 'The domain to ping' }]
+        description: 'Check the status and latency of a specific domain.',
+        options: [{ option: 'domain', description: 'Domain to perform the ping.' }]
     },
-    { name: 'decode64', description: 'decodificar' },
-    { name: 'encode64', description: 'encode' },
-    {
-        name: 'ra',
-        description: 'RA Database leak unasp. 2022 & 2025 by opzywl.'
-    },
-    { name: 'exit', description: 'Sai do terminal.' }
+    { name: 'encode64', description: 'Encode text to Base64.' },
+    { name: 'decode64', description: 'Decode text from Base64.' },
+
+    { name: 'ra', description: 'SI Query database leak from UNASP (2022 & 2025).' },
+    { name: 'fdpclient', description: 'List versions and download counts from GitHub releases.' }
 ];
 
 export class Help {
