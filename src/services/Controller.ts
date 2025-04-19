@@ -12,6 +12,7 @@ import { Encode64 } from './Encode64'
 import { Clock } from './Clock'
 import { Pages } from './Pages'
 import {FDPClient} from "./FDPClient";
+import {Paste} from "./Paste";
 
 export class Controller {
     constructor(
@@ -81,6 +82,9 @@ export class Controller {
                 break;
             case "ra":
                 new RA(arg, this.commandElement);
+                break
+            case "paste":
+                new Paste(arg, this.commandElement);
                 break
             case 'clear':
                 document.querySelector<HTMLElement>('#terminal')!.innerHTML = ''
