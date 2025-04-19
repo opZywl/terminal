@@ -16,6 +16,8 @@ const commands: Command[] = [
     { name: 'clear', description: 'Limpa o terminal.' },
     { name: 'history', description: 'Histórico de comandos.' },
     { name: 'clock', description: 'Verificar horário em outros países.' },
+    { name: 'pages', description: 'Acessar Paginas Salvas' },
+    { name: 'fdpclient', description: 'lista versões e contagem de downloads dos releases GitHub.' },
     {
         name: 'theme',
         description: 'Muda o tema do terminal.',

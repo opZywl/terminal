@@ -49,10 +49,11 @@ export class Theme {
             case "--help":
                 this.showHelp();
                 break;
-            default:
+            default: {
                 const errMsg = `theme: '${flag}' is not a valid argument.<br>type 'theme --help' for help.`;
                 this.uf.updateElement("div", "error", errMsg, this.commandElement);
                 break;
+            }
         }
     }
 

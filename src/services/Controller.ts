@@ -11,6 +11,8 @@ import { Ping } from './Ping'
 import { Decode64 } from './Decode64'
 import { Encode64 } from './Encode64'
 import { Clock } from './Clock'
+import { Pages } from './Pages'
+import {FDPClient} from "./FDPClient";
 
 export class Controller {
     constructor(
@@ -74,6 +76,12 @@ export class Controller {
                 break
             case "clock":
                 new Clock(arg, this.commandElement);
+                break;
+            case "pages":
+                new Pages(arg, this.commandElement);
+                break;
+            case "fdpclient":
+                new FDPClient(arg, this.commandElement);
                 break;
             case "ra":
                 new RA(arg, this.commandElement);

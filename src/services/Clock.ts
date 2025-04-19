@@ -5,15 +5,15 @@ import { UniversalFunction } from "./UniversalFunction";
  *         fusos de países pré‑definidos.
  *
  * usage
- *   clock HH:MM [paises...]      → mostra todos ou filtra países
- *   clock agora|now [paises...]   → usa horário atual de SP
- *   clock --list                  → lista países suportados
- *   clock --help                  → ajuda
+ *   clock HH: MM [paises...] → mostra todos ou filtra países
+ *   clock agora|now [paises...] → usa horário atual de SP
+ *   clock --list → lista países suportados
+ *   clock --help → ajuda
  */
 export class Clock {
     private uf = new UniversalFunction();
-    private cmd: HTMLElement;
-    private args: string[];
+    private readonly cmd: HTMLElement;
+    private readonly args: string[];
 
     /** fusos horários: offset relativo ao UTC em horas */
     private zones: Record<string, { nome: string; offset: number }> = {
