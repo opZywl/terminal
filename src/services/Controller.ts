@@ -1,16 +1,15 @@
-// src/services/Controller.ts
 import { UniversalFunction } from './UniversalFunction'
-//import { Theme } from './Theme'
-//import { About } from './About'
+import { Theme } from './Theme'
+import { About } from './About'
 import { Help } from './Help'
 import { History as HistoryDOM } from './History'
-/* import { Resume } from './Resume'
+import { Resume } from './Resume'
 import { Connect } from './Connect'
 import { Contact } from './Contact'
 import { RA } from './RA'
 import { Ping } from './Ping'
-
- */
+import { Decode64 } from './Decode64'
+import { Encode64 } from './Encode64'
 
 export class Controller {
     constructor(
@@ -21,6 +20,22 @@ export class Controller {
     }
 
     private parseCommand(): void {
+
+        if (RA.isAwaiting()) {
+            new RA(this.InputedCommand, this.commandElement);
+            return;
+        }
+
+        if (Decode64.isAwaiting()) {
+            new Decode64(this.InputedCommand, this.commandElement);
+            return;
+        }
+
+        if (Encode64.isAwaiting()) {
+            new Encode64(this.InputedCommand, this.commandElement);
+            return;
+        }
+
         const [raw, ...rest] = this.InputedCommand.split(' ')
         const cmd = raw.toLowerCase()
         const arg = rest.join(' ').trim().toLowerCase()
@@ -29,22 +44,11 @@ export class Controller {
             case 'help':
                 new Help().updateDOM()
                 break
-          /*  case 'about':
-                new About().updateDOM()
-                break
-            case 'ping':
-                new Ping(arg, this.commandElement)
-                break
             case 'theme':
                 new Theme(arg, this.commandElement)
                 break
-
-           */
-            case 'history':
-                new HistoryDOM().updateDOM()
-                break
-         /*   case 'resume':
-                new Resume(arg, this.commandElement)
+           case 'about':
+                new About().updateDOM()
                 break
             case 'connect':
                 new Connect().updateDOM()
@@ -52,11 +56,24 @@ export class Controller {
             case 'contact':
                 new Contact().updateDOM()
                 break
-            case 'ra':
-                new RA().updateDOM()
+            case 'resume':
+                new Resume(arg, this.commandElement)
                 break
-
-          */
+            case 'ping':
+                new Ping(arg, this.commandElement)
+                break
+            case 'history':
+                new HistoryDOM().updateDOM()
+                break
+            case 'decode64':
+                new Decode64(arg, this.commandElement)
+                break
+            case 'encode64':
+                new Encode64(arg, this.commandElement)
+                break
+            case "ra":
+                new RA(arg, this.commandElement);
+                break
             case 'clear':
                 document.querySelector<HTMLElement>('#terminal')!.innerHTML = ''
                 break

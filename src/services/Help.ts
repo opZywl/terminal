@@ -13,7 +13,6 @@ interface Command {
 
 const commands: Command[] = [
     { name: 'help', description: 'Lista de comandos.' },
-    { name: 'about', description: 'Sobre mim.' },
     { name: 'clear', description: 'Limpa o terminal.' },
     { name: 'history', description: 'Histórico de comandos.' },
     {
@@ -27,10 +26,11 @@ const commands: Command[] = [
             { option: '--list', description: 'List all the themes.' }
         ]
     },
+    { name: 'about', description: 'Sobre mim.' },
     {
-        name: 'ping',
-        description: 'Ping a domain.',
-        options: [{ option: 'domain', description: 'The domain to ping' }]
+        name: 'resume',
+        description: 'Mostrar CV.',
+        options: [{ option: '--download', description: 'Download the resume. 📥' }]
     },
     {
         name: 'connect',
@@ -49,14 +49,18 @@ const commands: Command[] = [
         ]
     },
     {
-        name: 'resume',
-        description: 'Mostrar CV.',
-        options: [{ option: '--download', description: 'Download the resume. 📥' }]
+        name: 'ping',
+        description: 'Ping a domain.',
+        options: [{ option: 'domain', description: 'The domain to ping' }]
     },
+    { name: 'decode64', description: 'decodificar' },
+    { name: 'encode64', description: 'encode' },
+    /*
     {
         name: 'ra',
         description: 'RA Database leak unasp. 2021 & 2025 by opzywl.'
     },
+    */
     { name: 'exit', description: 'Sai do terminal.' }
 ];
 

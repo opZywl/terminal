@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-          rel="shortcut icon"
-          href="/src/assets/favicon.png"
-          type="image/png"
-  />
-  <link
-          href="https://mshaugh.github.io/nerdfont-webfonts/build/firacode-nerd-font.css"
-          rel="stylesheet"
-  />
-  <link rel="stylesheet" href="/src/styles/global.css" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial‑scale=1.0" />
+
+  <script>
+    (()=>{
+      const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.classList.add(dark ? "dark-space" : "light-haze");
+    })();
+  </script>
+
   <link rel="stylesheet" href="/src/styles/themes.css" />
+  <link rel="stylesheet" href="/src/styles/global.css" />
   <link rel="stylesheet" href="/src/styles/App.css" />
+  <link href="https://mshaugh.github.io/nerdfont-webfonts/build/firacode-nerd-font.css" rel="stylesheet"/>
+  <link rel="shortcut icon" href="/src/assets/favicon.png" type="image/png"/>
+
   <title>Terminal</title>
 </head>
 <body>
