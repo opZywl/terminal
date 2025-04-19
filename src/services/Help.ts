@@ -15,6 +15,7 @@ const commands: Command[] = [
     { name: 'help', description: 'Lista de comandos.' },
     { name: 'clear', description: 'Limpa o terminal.' },
     { name: 'history', description: 'Histórico de comandos.' },
+    { name: 'clock', description: 'Verificar horário em outros países.' },
     {
         name: 'theme',
         description: 'Muda o tema do terminal.',

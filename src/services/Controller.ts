@@ -10,6 +10,7 @@ import { RA } from './RA'
 import { Ping } from './Ping'
 import { Decode64 } from './Decode64'
 import { Encode64 } from './Encode64'
+import { Clock } from './Clock'
 
 export class Controller {
     constructor(
@@ -71,6 +72,9 @@ export class Controller {
             case 'encode64':
                 new Encode64(arg, this.commandElement)
                 break
+            case "clock":
+                new Clock(arg, this.commandElement);
+                break;
             case "ra":
                 new RA(arg, this.commandElement);
                 break
