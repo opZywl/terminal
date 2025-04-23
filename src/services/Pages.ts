@@ -15,6 +15,7 @@ export class Pages {
         "Brightspace Adventistas":  "https://adventistas.brightspace.com/",
         "Portal do Aluno UNASP": "https://aluno-ies.educadventista.org/FrameHTML/Web/App/Edu/PortalEducacional/login/?_gl=1*cads6z*_gcl_au*NzczNDIwODk3LjE3NDUwNzcxOTk.*FPAU*NzczNDIwODk3LjE3NDUwNzcxOTk.*_ga*NjE3NDgzNTUuMTc0NTA3NzE5OQ..*_ga_TT3ECPVC9E*MTc0NTA3NzE5OC4xLjAuMTc0NTA3NzIwMS4wLjAuNTY4MDQwMzA5*_fplc*cW9VV0kzanVQODBRblo3YXFjME9BUGk4Q1NGbCUyRk5HeHBVc3pKb1ZZSThraklibXFEQU5NVkwxYlE4a01GQVVENHolMkYxeU82SzJBbGZaRU9BVzhjUnIwdWlaNUN4MGg0TGR5alF0UlhlUDFiUUJLU0ZHQk9RWXc5NTgxYWw2USUzRCUzRA..",
         "Portfolio": "https://www.lucas-lima.xyz/",
+        "Componentes Curriculares": "https://componentecurricular.unasp.edu.br/",
     };
 
     constructor(arg: string, commandElement: HTMLElement) {
