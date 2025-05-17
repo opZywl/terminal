@@ -18,9 +18,7 @@ export class Paste {
     }
 
     private readonly CHUNK_SIZE = 1900;
-
     private readonly MAX_FILE_SIZE = 10 * 1024 * 1024;
-
     private readonly TIMEOUT_MS = 10_000;
 
     private uf: UniversalFunction;
@@ -28,10 +26,9 @@ export class Paste {
     private readonly content: string;
 
     constructor(arg: string, cmd: HTMLElement) {
-        this.uf  = new UniversalFunction();
-        this.cmd  = cmd;
+        this.uf      = new UniversalFunction();
+        this.cmd     = cmd;
         this.content = (arg ?? "").trim();
-
         this.run();
     }
 
@@ -48,17 +45,16 @@ export class Paste {
         if (chunks.length > 1) {
             this.showOutput(`⏳ Texto grande detectado: serão ${chunks.length} partes.`);
         }
-
-        for (let i = 0; i < chunks.length; i++) {
-            const part = chunks[i];
+        const tasks = chunks.map((part, i) => {
             const label = `Parte ${i + 1}/${chunks.length}`;
-            await this.postChunk(part, label);
-        }
+            return this.postChunk(part, label);
+        });
+        await Promise.allSettled(tasks);
     }
 
     private selectAndSendFiles(): void {
         const input = document.createElement("input");
-        input.type = "file";
+        input.type     = "file";
         input.multiple = true;
         input.onchange = async () => {
             const files = Array.from(input.files || []);
@@ -66,15 +62,13 @@ export class Paste {
                 this.showError("❌ Nenhum arquivo selecionado.");
                 return;
             }
-            for (const file of files) {
-                if (file.size > this.MAX_FILE_SIZE) {
-                    this.showError(
-                        `❌ "${file.name}" excede o limite de 10MB (${Math.round(file.size/1024/1024*100)/100}MB).`
-                    );
-                    continue;
-                }
-                await this.postFile(file);
-            }
+
+            const uploadTasks: Promise<void>[] = files.map(file =>
+                file.size <= this.MAX_FILE_SIZE
+                    ? this.postFile(file)
+                    : this.postLargeFileInChunks(file)
+            );
+            await Promise.allSettled(uploadTasks);
         };
         input.click();
     }
@@ -83,7 +77,7 @@ export class Paste {
         this.uf.updateElement(
             "div", "error",
             `Uso correto:
-             <strong>paste <texto></strong> — envia texto ao Discord; ou
+             <strong>paste &lt;texto&gt;</strong> — envia texto ao Discord; ou
              <strong>paste file</strong> — seleciona e envia arquivos (até 10MB).`,
             this.cmd
         );
@@ -111,8 +105,7 @@ export class Paste {
         const timeoutId  = setTimeout(() => controller.abort(), this.TIMEOUT_MS);
 
         try {
-            const url = this.webhookUrl;
-            const resp = await fetch(url, {
+            const resp = await fetch(this.webhookUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ content: part }),
@@ -123,8 +116,7 @@ export class Paste {
             if (!resp.ok) {
                 let details = "";
                 try {
-                    const json = await resp.json();
-                    details = JSON.stringify(json, null, 2);
+                    details = JSON.stringify(await resp.json(), null, 2);
                 } catch {
                     details = await resp.text();
                 }
@@ -137,8 +129,8 @@ export class Paste {
             this.showOutput(`✅ ${label} enviada com sucesso.`);
         } catch (err: unknown) {
             clearTimeout(timeoutId);
-            if (err instanceof Error && err.message === "Falha ao decodificar a URL do webhook.") {
-                this.showError(`❌ ${label} erro: ${err.message}`)
+            if (err instanceof Error && err.message.includes("Falha ao decodificar")) {
+                this.showError(`❌ ${label} erro: ${err.message}`);
             } else if ((err as DOMException).name === "AbortError") {
                 this.showError(`❌ ${label} timeout após ${this.TIMEOUT_MS}ms.`);
             } else {
@@ -148,16 +140,15 @@ export class Paste {
     }
 
     private async postFile(file: File): Promise<void> {
-        this.showOutput(`⏳ Enviando arquivo "${file.name}"…`);
-        const form = new FormData();
+        this.showOutput(`⏳ Enviando arquivo "${file.name}" (${(file.size/1024/1024).toFixed(2)}MB)…`);
+        const form       = new FormData();
         form.append("file", file, file.name);
 
         const controller = new AbortController();
         const timeoutId  = setTimeout(() => controller.abort(), this.TIMEOUT_MS);
 
         try {
-            const url = this.webhookUrl;
-            const resp = await fetch(url, {
+            const resp = await fetch(this.webhookUrl, {
                 method: "POST",
                 body: form,
                 signal: controller.signal,
@@ -167,8 +158,7 @@ export class Paste {
             if (!resp.ok) {
                 let details = "";
                 try {
-                    const json = await resp.json();
-                    details = JSON.stringify(json, null, 2);
+                    details = JSON.stringify(await resp.json(), null, 2);
                 } catch {
                     details = await resp.text();
                 }
@@ -181,13 +171,32 @@ export class Paste {
             this.showOutput(`✅ Arquivo "${file.name}" enviado com sucesso.`);
         } catch (err: unknown) {
             clearTimeout(timeoutId);
-            if (err instanceof Error && err.message === "Falha ao decodificar a URL do webhook.") {
+            if (err instanceof Error && err.message.includes("Falha ao decodificar")) {
                 this.showError(`❌ Erro no envio de "${file.name}": ${err.message}`);
             } else if ((err as DOMException).name === "AbortError") {
                 this.showError(`❌ Envio de "${file.name}" timeout após ${this.TIMEOUT_MS}ms.`);
             } else {
                 this.showError(`❌ Erro no envio de "${file.name}": ${(err as Error).message}`);
             }
+        }
+    }
+
+
+    private async postLargeFileInChunks(file: File): Promise<void> {
+        const partSize   = this.MAX_FILE_SIZE;
+        const totalParts = Math.ceil(file.size / partSize);
+
+        this.showOutput(`⏳ "${file.name}" excede 10MB. Enviando em ${totalParts} partes...`);
+
+        for (let i = 0; i < totalParts; i++) {
+            const start      = i * partSize;
+            const end        = Math.min(start + partSize, file.size);
+            const chunkBlob  = file.slice(start, end);
+            const partNumber = i + 1;
+            const label      = `"${file.name}" parte ${partNumber}/${totalParts}`;
+            const chunkFile  = new File([chunkBlob], `${file.name}.parte${partNumber}`, { type: file.type });
+
+            await this.postFile(chunkFile);
         }
     }
 }
