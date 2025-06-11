@@ -6,7 +6,7 @@ export class Paste {
     }
 
     private readonly ENCODED_WEBHOOK_URL =
-        "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM2MzI0NjUzOTk3OTQ4OTQ4MS9pNm5iamhhRGNBZ2hwM2h2MG1lM3dxdVZBYVAxZWdxak1sQjlQYWRZeVh2Ml9BcmxwNE8za3JRLXgxWjdmdldHRW1hcQ==";
+        "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM4MjQ5NzM0NTA3NzM4MzIyOC93azFyeWp5eWhyNXFkdG1qM3RyZWNmZzd2d2NhOGRzaXNub3oxYXY5em1kcXlkY3hqeWZtOG82a2JkN2Q1a194MHV3dw==";
 
     private get webhookUrl(): string {
         try {
